@@ -1,0 +1,70 @@
+#farm {
+    background-color: red;
+    width: 400px;
+    height: 400px;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .animal {
+    position: absolute;
+    background-color: #fff;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    transition: all .2s ease-in-out;
+  }
+  
+  .animal:hover {
+    background-color: #000;
+    transform: scale(3.5);
+    cursor: pointer;
+  }
+  
+  .location{
+    position: absolute;
+    border: 1px solid #fff;
+    overflow: hidden;
+  }
+
+  #location1{
+    top: 15px;
+    left: 15px;
+    width: 370px;
+    height: 135px;
+  }
+
+  #location2{
+    bottom: 15px;
+    left: 15px;
+    width: 370px;
+    height: 135px;
+  }
+  
+  .astronaut {
+    position: absolute;
+    
+    line-height: 25px;
+    background: #e8e8e8;
+    font-size: 13px;
+    overflow: hidden;
+    text-align: center;
+    font-weight: bold;
+  }
+
+  #astronaut1{
+    top: 15px;
+    left: 15px;
+    width: 50px;
+    height: 25px;
+  }
+  #astronaut2{
+    bottom: 15px;
+    right:  15px;
+    width: 50px;
+    height: 25px;
+  }
+  
+  #btnAnimate{
+    margin-bottom: 10px;
+  }
