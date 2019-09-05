@@ -9,8 +9,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bootstrap": "^4.3.1",
     "jquery": "^3.4.1",
-    "jquery-ui-dist": "^1.12.1"
+    "jquery-ui-dist": "^1.12.1",
+    "knockout": "^3.5.0"
   },
   "devDependencies": {
     "live-server": "^1.2.1"
