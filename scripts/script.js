@@ -137,7 +137,7 @@ var viewModel = {
 			width: '150px',
 			height: '50px'
 		}]),
-		animals: ko.observableArray([])
+		animals: ko.observableArray([]),
 	}]),
 
 	getEndX: function (data) {
@@ -149,7 +149,6 @@ var viewModel = {
 	},
 
 	locateAnimal: function (animal, location) {
-
 		var x = random(0, 'x', animal, location),
 			y = random(0, 'y', animal, location),
 			space = 15;
@@ -160,40 +159,44 @@ var viewModel = {
 			left: x,
 			top: y
 		};
-	}
+	},
+
+	getLocatedObjectsLocation: function (location) {
+		var arr = []
+		viewModel.locations().filter(f => {
+			return f == location
+		}).map(l => {
+			l.astronauts().map(a => {
+				arr.push({
+					xStart: parseInt(a.left),
+					xEnd: parseInt(a.left) + parseInt(a.width),
+					yStart: parseInt(a.top)-15,
+					yEnd: parseInt(a.top)+15 + parseInt(a.height)
+				})
+			});
+		})
+		return arr;
+	},
 };
 
-
-function disallowPosition(rnd, animal, location) {
-
-	var count = ko.utils.arrayFilter(location.astronauts(), function (astronaut) {
-
-		console.log(animal.id + '----' + rnd + '>=' + parseInt(astronaut.left) + '&&' + rnd + '<=' + parseInt(astronaut.left) + parseInt(astronaut.width))
-
-
-		if (rnd >= parseInt(astronaut.left) && rnd <= parseInt(astronaut.left) + parseInt(astronaut.width) ||
-			rnd >= astronaut.top && rnd <= parseInt(astronaut.top) + parseInt(astronaut.height)) {
-			return astronaut;
-		}
-	}).length
-
-	return count > 0;
+function getMatchedPosition(rnd, rotate, location) {
+	var located = viewModel.getLocatedObjectsLocation(location);
+	return ko.utils.arrayFilter(located, function (locatedEl) {
+		return rotate === 'x' ?
+			(rnd >= locatedEl.xStart && rnd <= locatedEl.xEnd) && (rnd<=locatedEl.xStart && rnd>= locatedEl.xEnd) :
+			(rnd >= locatedEl.yStart && rnd <= locatedEl.yEnd) && (rnd<=locatedEl.ySttrt && rnd>=locatedEl.yEnd);
+	}).length > 0
 }
 
-
 function random(min, rotate, animal, location) {
-
 	min = parseFloat(min);
 	max = rotate === 'x' ? parseFloat(viewModel.getEndX(location)) : parseFloat(viewModel.getEndY(location));
 	var rnd = Math.floor(Math.random() * (max - min + 1)) + min;
 
-	var dis = disallowPosition(rnd, animal, location);
-	if (dis) {
-		console.log(location)
-		rnd = random(min, rotate, location)
+	var matched = getMatchedPosition(rnd, rotate, location);
+	if (matched) {
+		rnd = random(min, rotate, animal, location);
 	}
-
-
 	return rnd;
 }
 
@@ -205,5 +208,4 @@ $(document).ready(function () {
 		});
 	})
 	ko.applyBindings(viewModel);
-
 });
