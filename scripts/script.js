@@ -149,15 +149,14 @@ var viewModel = {
 	},
 
 	locateAnimal: function (animal, location) {
-		var x = random(0, 'x', animal, location),
-			y = random(0, 'y', animal, location),
+		var rnd = randomPosition(location),
 			space = 15;
 
-		x = (parseInt(location.width) - x) < space ? x -= space : x;
-		y = (parseInt(location.height) - y) < space ? y -= space : y;
+		rnd.x = (parseInt(location.width) - rnd.x) < space ? rnd.x -= space : rnd.x;
+		rnd.y = (parseInt(location.height) - rnd.y) < space ? rnd.y -= space : rnd.y;
 		return {
-			left: x,
-			top: y
+			left: rnd.x,
+			top: rnd.y
 		};
 	},
 
@@ -171,7 +170,7 @@ var viewModel = {
 					xStart: parseInt(a.left),
 					xEnd: parseInt(a.left) + parseInt(a.width),
 					yStart: parseInt(a.top)-15,
-					yEnd: parseInt(a.top)+15 + parseInt(a.height)
+					yEnd: parseInt(a.top)  + parseInt(a.height) +15
 				})
 			});
 		})
@@ -179,24 +178,31 @@ var viewModel = {
 	},
 };
 
-function getMatchedPosition(rnd, rotate, location) {
+function getMatchedPosition(rnd, location) {
 	var located = viewModel.getLocatedObjectsLocation(location);
+	
 	return ko.utils.arrayFilter(located, function (locatedEl) {
-		return rotate === 'x' ?
-			(rnd >= locatedEl.xStart && rnd <= locatedEl.xEnd) && (rnd<=locatedEl.xStart && rnd>= locatedEl.xEnd) :
-			(rnd >= locatedEl.yStart && rnd <= locatedEl.yEnd) && (rnd<=locatedEl.ySttrt && rnd>=locatedEl.yEnd);
+		console.log((rnd.x >= locatedEl.xStart && rnd.x <= locatedEl.xEnd) + ' --- '+ (rnd.y >= locatedEl.yStart && rnd.y <= locatedEl.yEnd))
+		return (rnd.x >= locatedEl.xStart && rnd.x <= locatedEl.xEnd) && (rnd.y >= locatedEl.yStart && rnd.y <= locatedEl.yEnd)
+		return false;
 	}).length > 0
 }
 
-function random(min, rotate, animal, location) {
-	min = parseFloat(min);
-	max = rotate === 'x' ? parseFloat(viewModel.getEndX(location)) : parseFloat(viewModel.getEndY(location));
-	var rnd = Math.floor(Math.random() * (max - min + 1)) + min;
 
-	var matched = getMatchedPosition(rnd, rotate, location);
-	if (matched) {
-		rnd = random(min, rotate, animal, location);
+function randomPosition(location) {
+	var min = 0,
+		xMax = parseInt(viewModel.getEndX(location)),
+		yMax = parseInt(viewModel.getEndY(location));
+
+	var rnd = {
+		x: Math.floor(Math.random() * (xMax - min + 1)) + min,
+		y: Math.floor(Math.random() * (yMax - min + 1)) + min
 	}
+
+	var matched = getMatchedPosition(rnd, location);
+	if (matched)
+		rnd = randomPosition(location);
+
 	return rnd;
 }
 
