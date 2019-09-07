@@ -1,38 +1,37 @@
-
 .container {
-  max-width: 1200px;
+	max-width: 1200px;
 }
 #farm {
-    border:1px solid blue;
-    width: 1200px;
-    height: 500px;
-    position: relative;
-    overflow: hidden;
-  }
-  
-  .animal {
-    position: absolute;
-    background-color: grey;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    transition: all .2s ease-in-out;
-    overflow: hidden;
-    text-indent: 999em;
-  }
-  
-  .animal:hover {
-    background-color: #000;
-    transform: scale(3.5);
-    cursor: pointer;
-  }
-  
-  .location{
-    position: absolute;
-    border: 1px solid #000;
-  }
+	border: 1px solid blue;
+	width: 1200px;
+	height: 500px;
+	position: relative;
+	overflow: hidden;
+}
 
-  /* #location1{
+.animal {
+	position: absolute;
+	background-color: grey;
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	transition: all 0.2s ease-in-out;
+	overflow: hidden;
+	text-indent: 999em;
+}
+
+.animal:hover {
+	background-color: #000;
+	transform: scale(3.5);
+	cursor: pointer;
+}
+
+.location {
+	position: absolute;
+	border: 1px solid #000;
+}
+
+/* #location1{
     top: 15px;
     left: 15px;
     width: 1170px;
@@ -45,31 +44,40 @@
     width: 1170px;
     height: 180px;
   } */
-  
-  .astronaut {
-    position: absolute;
-    color:white;
-    line-height: 25px;
-    background: red;
-    font-size: 13px;
-    overflow: hidden;
-    font-weight: bold;
-  }
 
-  #astronaut1{
-    top: 15px;
-    left: 15px;
-    width: 150px;
-    height: 50px;
-  }
-  #astronaut2{
-    bottom: 10px;
-    right:  15px;
-    width: 150px;
-    height: 50px;
-  }
-  
-  #btnAnimate{
-    margin-bottom: 10px;
-  }
-  .name{position: absolute; left: 5px;top:5px;text-align: inherit}
+.astronaut {
+	position: absolute;
+	color: white;
+	line-height: 25px;
+	background: red;
+	font-size: 13px;
+	overflow: hidden;
+	font-weight: bold;
+}
+
+#astronaut1 {
+	top: 15px;
+	left: 15px;
+	width: 150px;
+	height: 50px;
+}
+#astronaut2 {
+	bottom: 10px;
+	right: 15px;
+	width: 150px;
+	height: 50px;
+}
+
+#btnAnimate {
+	margin-bottom: 10px;
+}
+.name {
+	position: absolute;
+	left: 5px;
+	top: 5px;
+	text-align: inherit;
+}
+
+.milking {
+	background-color: green;
+}

@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
+    <link href="node_modules/jquery-ui-dist/jquery-ui.min.css" type="text/css" rel="stylesheet" />
     <link href="styles/style.css" type="text/css" rel="stylesheet" />
     <title>animal animate</title>
 </head>
@@ -13,17 +14,17 @@
 <body>
     <div class="container pt-3">
         <div class="row">
-            <button class="btn btn-primary" id="btnAnimate">Animate</button>
+            <button class="btn btn-primary" data-bind="click:runActions.bind(this)" id="btnAnimate">Animate</button>
             <div id="farm" data-bind="foreach: { data: locations, as: 'location' }">
                 <div data-bind="style:{top:location.top,left:location.left,width:location.width,height:location.height},foreach:{data:astronauts,as:'astronaut'}"
                     class="location">
                     <div class="name" data-bind="text:location.name"></div>
-                    <div data-bind="style:{top:astronaut.top,left:astronaut.left,width:astronaut.width,height:astronaut.height}"
+                    <div data-bind="style:{top:astronaut.top,left:astronaut.left,width:astronaut.width,height:astronaut.height},attr:{id:astronaut.id},droppable"
                         class="astronaut">
                         <div class="name" data-bind="text:astronaut.name"></div>
                     </div>
                     <!--ko foreach: {data:location.animals(),as:'animal'}-->
-                    <div data-bind="text:animal.id,style:$root.locateAnimal(animal,location),attr:{id:animal.id}"
+                    <div data-bind="text:animal.id,style:$root.locateAnimal(location),attr:{id:animal.id},draggable" 
                         class="animal">
                     </div>
                     <!--/ko-->
