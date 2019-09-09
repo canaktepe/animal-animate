@@ -108,11 +108,10 @@ var viewModel = {
 
 					viewModel.calculateDuration(animalEl, x, y, function (duration) {
 						var delay = action.delay;
-						animalEl.stop()
-					.delay(delay).transition({
+						animalEl.stop().delay(delay).transition({
 							x: x,
 							y: y
-						}, duration, 'linear')
+						}, duration, 'linear');
 					})
 				});
 			})
