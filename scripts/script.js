@@ -50,9 +50,11 @@ var viewModel = {
 		rnd.x = parseInt(location.width) - rnd.x < space ? (rnd.x -= space) : rnd.x;
 		rnd.y =
 			parseInt(location.height) - rnd.y < space ? (rnd.y -= space) : rnd.y;
+
 		return {
-			left: rnd.x,
-			top: rnd.y
+			transform: 'translate(' + rnd.x + 'px,' + rnd.y + 'px)'
+			// left: rnd.x,
+			// top: rnd.y
 		};
 	},
 
@@ -77,7 +79,7 @@ var viewModel = {
 	},
 
 	calculateDuration: function (el, targetX, targetY, callback) {
-		var speed =5,
+		var speed = 5,
 			animalLocation = getPositionAtCenter(el),
 			sourceLongAxis = Math.max(animalLocation.x, animalLocation.y),
 			targetLongAxis = Math.max(targetX, targetY),
@@ -105,23 +107,13 @@ var viewModel = {
 					}
 
 					viewModel.calculateDuration(animalEl, x, y, function (duration) {
-						var delay = action.delay ;
-						animalEl.stop().delay(delay)
-							// .queue(function () {
-							// 	$(this)
-							// 		.delay(delay)
-									.animate({
-										//  transform: 'translate('+x +'px,'+y+'px)'
-										top: y + 'px',
-										left: x + 'px'
-									}, {
-										duration: duration,
-										easing: 'easeOutSine'
-									})
-									// .dequeue();
-							// });
+						var delay = action.delay;
+						animalEl.stop()
+					.delay(delay).transition({
+							x: x,
+							y: y
+						}, duration, 'linear')
 					})
-
 				});
 			})
 		);

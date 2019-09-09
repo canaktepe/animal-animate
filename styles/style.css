@@ -17,7 +17,7 @@
 	border-radius: 50%;
 	transition: all 0.2s ease-in-out;
 	overflow: hidden;
-	text-indent: 999em;
+  text-indent: 999em;
 }
 
 .animal:hover {
