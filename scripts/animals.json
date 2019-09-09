@@ -32,7 +32,7 @@
 				"element": "#astronaut1",
 				"x": 0,
 				"y": 0,
-				"delay": 20000,
+				"delay": 15000,
 				"duration": 15000
 			},
 			{
@@ -40,7 +40,7 @@
 				"element": null,
 				"x": 163,
 				"y": 75,
-				"delay": 25000,
+				"delay": 15000,
 				"duration": 15000
 			}
 		]

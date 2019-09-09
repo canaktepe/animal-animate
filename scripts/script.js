@@ -1,22 +1,19 @@
 var viewModel = {
-	locations: ko.observableArray([
-		{
+	locations: ko.observableArray([{
 			id: 1,
 			name: 'location-1',
 			top: '15px',
 			left: '15px',
 			width: '1170px',
 			height: '180px',
-			astronauts: ko.observableArray([
-				{
-					id: 'astronaut1',
-					name: 'A1',
-					top: '25px',
-					left: '15px',
-					width: '150px',
-					height: '50px'
-				}
-			]),
+			astronauts: ko.observableArray([{
+				id: 'astronaut1',
+				name: 'A1',
+				top: '25px',
+				left: '15px',
+				width: '150px',
+				height: '50px'
+			}]),
 			animals: ko.observableArray([])
 		},
 		{
@@ -26,29 +23,27 @@ var viewModel = {
 			left: '15px',
 			width: '1170px',
 			height: '180px',
-			astronauts: ko.observableArray([
-				{
-					id: 'astronaut2',
-					name: 'A2',
-					top: '105px',
-					left: '1005px',
-					width: '150px',
-					height: '50px'
-				}
-			]),
+			astronauts: ko.observableArray([{
+				id: 'astronaut2',
+				name: 'A2',
+				top: '105px',
+				left: '1005px',
+				width: '150px',
+				height: '50px'
+			}]),
 			animals: ko.observableArray([])
 		}
 	]),
 
-	getEndX: function(data) {
+	getEndX: function (data) {
 		return `${parseFloat(data.width) - parseFloat(data.left)}px`;
 	},
 
-	getEndY: function(data) {
+	getEndY: function (data) {
 		return `${parseFloat(data.height)}px`;
 	},
 
-	locateAnimal: function(location) {
+	locateAnimal: function (location) {
 		var rnd = randomPosition(location),
 			space = 15;
 
@@ -61,7 +56,7 @@ var viewModel = {
 		};
 	},
 
-	getLocatedObjectsLocation: function(location) {
+	getLocatedObjectsLocation: function (location) {
 		var arr = [];
 		viewModel
 			.locations()
@@ -81,11 +76,21 @@ var viewModel = {
 		return arr;
 	},
 
-	runActions: function() {
+	calculateDuration: function (el, targetX, targetY, callback) {
+		var speed =5,
+			animalLocation = getPositionAtCenter(el),
+			sourceLongAxis = Math.max(animalLocation.x, animalLocation.y),
+			targetLongAxis = Math.max(targetX, targetY),
+			distance = Math.abs(sourceLongAxis - targetLongAxis),
+			time = distance / (speed / 100);
+		callback(time);
+	},
+
+	runActions: function () {
 		viewModel.locations().map(l =>
-			l.animals().forEach(function(animal) {
+			l.animals().forEach(function (animal) {
 				let animalEl = $(`div#${animal.id}`);
-				$.each(animal.actions, function(ai, action) {
+				$.each(animal.actions, function (ai, action) {
 					let x, y;
 					switch (action.target) {
 						case 1:
@@ -98,22 +103,25 @@ var viewModel = {
 							y = targetPosition.y;
 							break;
 					}
-					animalEl
-					.queue(function() {
-						$(this)
-							.delay(action.delay)
-							.animate(
-								{
-									top: y + 'px',
-									left: x + 'px'
-								},
-								{
-									duration: action.duration,
-									easing: 'easeOutSine'
-								}
-							)
-							.dequeue();
-					});
+
+					viewModel.calculateDuration(animalEl, x, y, function (duration) {
+						var delay = action.delay ;
+						animalEl.stop().delay(delay)
+							// .queue(function () {
+							// 	$(this)
+							// 		.delay(delay)
+									.animate({
+										//  transform: 'translate('+x +'px,'+y+'px)'
+										top: y + 'px',
+										left: x + 'px'
+									}, {
+										duration: duration,
+										easing: 'easeOutSine'
+									})
+									// .dequeue();
+							// });
+					})
+
 				});
 			})
 		);
@@ -123,8 +131,8 @@ var viewModel = {
 function getAnimals(locationId, callback) {
 	$.getJSON('../scripts/animals.json', {
 		id: locationId
-	}).done(function(data) {
-		var grepData = $.grep(data, function(item) {
+	}).done(function (data) {
+		var grepData = $.grep(data, function (item) {
 			return locationId === 1 ? item.id > 0 && item.id <= 50 : item.id > 50;
 		});
 		return callback(grepData);
@@ -133,9 +141,11 @@ function getAnimals(locationId, callback) {
 
 function getPositionAtCenter(element) {
 	var el = $(element).get(0);
+
 	var parent = $(element)
 		.parent()
 		.get(0);
+
 	var parentRect = parent.getBoundingClientRect();
 	var rect = el.getBoundingClientRect();
 	return {
@@ -147,7 +157,7 @@ function getPositionAtCenter(element) {
 function getMatchedPosition(rnd, location) {
 	var located = viewModel.getLocatedObjectsLocation(location);
 	return (
-		ko.utils.arrayFilter(located, function(locatedEl) {
+		ko.utils.arrayFilter(located, function (locatedEl) {
 			return (
 				rnd.x >= locatedEl.xStart &&
 				rnd.x <= locatedEl.xEnd &&
@@ -174,29 +184,29 @@ function randomPosition(location) {
 }
 
 ko.bindingHandlers.draggable = {
-    init: function (element, valueAccessor, allBindingsAccessor, vieModel, bindingContext){
-        $(element).draggable();
-    }
+	init: function (element, valueAccessor, allBindingsAccessor, vieModel, bindingContext) {
+		$(element).draggable();
+	}
 };
 
-ko.bindingHandlers.droppable ={
-	init:function(element){
+ko.bindingHandlers.droppable = {
+	init: function (element) {
 		$(element).droppable({
-			drop: function( event, ui ) {
-			  $( this )
-				.addClass( "milking" )
+			drop: function (event, ui) {
+				$(this)
+					.addClass("milking")
 			},
-			out: function(event, ui) {
-				$( this )
-				.removeClass( "milking" )
-			  }
-		  });
+			out: function (event, ui) {
+				$(this)
+					.removeClass("milking")
+			}
+		});
 	}
 }
 
-$(document).ready(function() {
-	ko.utils.arrayForEach(viewModel.locations(), function(location) {
-		getAnimals(location.id, function(response) {
+$(document).ready(function () {
+	ko.utils.arrayForEach(viewModel.locations(), function (location) {
+		getAnimals(location.id, function (response) {
 			if (response.length === 0) return;
 			location.animals(ko.toJS(response));
 		});
