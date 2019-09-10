@@ -79,12 +79,22 @@ var viewModel = {
 	},
 
 	calculateDuration: function (el, targetX, targetY, callback) {
+		var style = window.getComputedStyle(el.get(0));
+		var matrix = new WebKitCSSMatrix(style.webkitTransform);
+
+		var elTranslateX = matrix.m41,
+			elTranslateY = matrix.m42;
+
 		var speed = 5,
-			animalLocation = getPositionAtCenter(el),
+			animalLocation = {
+				x: el.x ? el.x : elTranslateX,
+				y: el.y ? el.y : elTranslateY
+			},
 			sourceLongAxis = Math.max(animalLocation.x, animalLocation.y),
 			targetLongAxis = Math.max(targetX, targetY),
 			distance = Math.abs(sourceLongAxis - targetLongAxis),
 			time = distance / (speed / 100);
+
 		callback(time);
 	},
 
@@ -107,6 +117,8 @@ var viewModel = {
 					}
 
 					viewModel.calculateDuration(animalEl, x, y, function (duration) {
+						animalEl.x = x;
+						animalEl.y = y;
 						var delay = action.delay;
 						animalEl.stop().delay(delay).transition({
 							x: x,
