@@ -17,7 +17,7 @@
 	border-radius: 50%;
 	transition: all 0.2s ease-in-out;
 	overflow: hidden;
-  text-indent: 999em;
+	text-indent: 999em;
 }
 
 .animal:hover {
@@ -61,6 +61,7 @@
 	width: 150px;
 	height: 50px;
 }
+
 #astronaut2 {
 	bottom: 10px;
 	right: 15px;
@@ -71,6 +72,7 @@
 #btnAnimate {
 	margin-bottom: 10px;
 }
+
 .name {
 	position: absolute;
 	left: 5px;

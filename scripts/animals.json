@@ -9,16 +9,14 @@
 				"element": "#astronaut1",
 				"x": 0,
 				"y": 0,
-				"delay": 0,
-				"duration": 15000
+				"delay": 0
 			},
 			{
 				"target": 1,
 				"element": null,
 				"x": 325,
 				"y": 110,
-				"delay": 15000,
-				"duration": 15000
+				"delay": 15000
 			}
 		]
 	},
@@ -32,16 +30,14 @@
 				"element": "#astronaut1",
 				"x": 0,
 				"y": 0,
-				"delay": 15000,
-				"duration": 15000
+				"delay": 15000
 			},
 			{
 				"target": 1,
 				"element": null,
 				"x": 163,
 				"y": 75,
-				"delay": 15000,
-				"duration": 15000
+				"delay": 15000
 			}
 		]
 	},
@@ -55,16 +51,14 @@
 				"element": "#astronaut1",
 				"x": 0,
 				"y": 0,
-				"delay": 50000,
-				"duration": 15000
+				"delay": 50000
 			},
 			{
 				"target": 1,
 				"element": null,
 				"x": 315,
 				"y": 45,
-				"delay": 25000,
-				"duration": 15000
+				"delay": 25000
 			}
 		]
 	},
@@ -72,7 +66,15 @@
 		"id": 4,
 		"x": 163,
 		"y": 97,
-		"actions": []
+		"actions": [
+			{
+				"target":1,
+				"element":null,
+				"x":15,
+				"y":50,
+				"delay":0
+			}
+		]
 	},
 	{
 		"id": 5,
@@ -630,16 +632,14 @@
 				"element": "#astronaut2",
 				"x": 0,
 				"y": 0,
-				"delay": 0,
-				"duration": 15000
+				"delay": 0
 			},
 			{
 				"target": 1,
 				"element": null,
 				"x": 100,
 				"y": 100,
-				"delay": 15000,
-				"duration": 15000
+				"delay": 15000
 			}
 		]
 	},

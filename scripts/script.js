@@ -85,7 +85,7 @@ var viewModel = {
 		var elTranslateX = matrix.m41,
 			elTranslateY = matrix.m42;
 
-		var speed = 5,
+		var speed = 1,
 			animalLocation = {
 				x: el.x ? el.x : elTranslateX,
 				y: el.y ? el.y : elTranslateY
