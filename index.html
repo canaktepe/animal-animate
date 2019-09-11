@@ -14,7 +14,7 @@
 <body>
     <div class="container pt-3">
         <div class="row">
-            <button class="btn btn-primary" data-bind="click:runActions.bind(this)" id="btnAnimate">Animate</button>
+            <button class="btn btn-primary d-none" data-bind="click:runActions.bind(this)" id="btnAnimate">Animate</button>
             <div id="farm" data-bind="foreach: { data: locations, as: 'location' }">
                 <div data-bind="style:{top:location.top,left:location.left,width:location.width,height:location.height},foreach:{data:astronauts,as:'astronaut'}"
                     class="location">

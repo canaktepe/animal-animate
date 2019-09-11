@@ -85,7 +85,7 @@ var viewModel = {
 		var elTranslateX = matrix.m41,
 			elTranslateY = matrix.m42;
 
-		var speed = 1,
+		var speed = 0.5,
 			animalLocation = {
 				x: el.x ? el.x : elTranslateX,
 				y: el.y ? el.y : elTranslateY
@@ -98,10 +98,31 @@ var viewModel = {
 		callback(time);
 	},
 
+	generateRandomActions: function (location,size) {
+		var actions=[];
+		for(var i = 1; i<=size ;i++){
+
+			var rnd = randomPosition(location);
+			actions.push(	{
+				"target": 1,
+				"element": null,
+				"x": rnd.x,
+				"y": rnd.y,
+				"delay": 2000
+			})
+		}
+		return actions;
+	},
+
 	runActions: function () {
 		viewModel.locations().map(l =>
 			l.animals().forEach(function (animal) {
 				let animalEl = $(`div#${animal.id}`);
+
+				if (typeof animal.actions === 'number') {
+					animal.actions = viewModel.generateRandomActions(l,animal.actions);
+				}
+
 				$.each(animal.actions, function (ai, action) {
 					let x, y;
 					switch (action.target) {
@@ -120,10 +141,12 @@ var viewModel = {
 						animalEl.x = x;
 						animalEl.y = y;
 						var delay = action.delay;
-						animalEl.stop().delay(delay).transition({
-							x: x,
-							y: y
-						}, duration, 'linear');
+						animalEl.queue(function () {
+							$(this).delay(delay).transition({
+								x: x,
+								y: y
+							}, duration, 'linear').dequeue();
+						})
 					})
 				});
 			})
@@ -213,6 +236,14 @@ $(document).ready(function () {
 			if (response.length === 0) return;
 			location.animals(ko.toJS(response));
 		});
+		
 	});
+
+
 	ko.applyBindings(viewModel);
+
+	setTimeout(() => {
+		viewModel.runActions();
+	}, 1000);
+
 });

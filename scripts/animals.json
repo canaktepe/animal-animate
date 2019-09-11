@@ -30,7 +30,7 @@
 				"element": "#astronaut1",
 				"x": 0,
 				"y": 0,
-				"delay": 15000
+				"delay": 0
 			},
 			{
 				"target": 1,
@@ -51,7 +51,7 @@
 				"element": "#astronaut1",
 				"x": 0,
 				"y": 0,
-				"delay": 50000
+				"delay": 0
 			},
 			{
 				"target": 1,
@@ -68,11 +68,11 @@
 		"y": 97,
 		"actions": [
 			{
-				"target":1,
-				"element":null,
-				"x":15,
-				"y":50,
-				"delay":0
+				"target": 2,
+				"element": "#astronaut1",
+				"x": 0,
+				"y": 0,
+				"delay": 0
 			}
 		]
 	},
@@ -80,31 +80,31 @@
 		"id": 5,
 		"x": 144,
 		"y": 77,
-		"actions": []
+		"actions": 10
 	},
 	{
 		"id": 6,
 		"x": 158,
 		"y": 32,
-		"actions": []
+		"actions": 15
 	},
 	{
 		"id": 7,
 		"x": 299,
 		"y": 50,
-		"actions": []
+		"actions": 12
 	},
 	{
 		"id": 8,
 		"x": 220,
 		"y": 31,
-		"actions": []
+		"actions": 14
 	},
 	{
 		"id": 9,
 		"x": 175,
 		"y": 16,
-		"actions": []
+		"actions": 9
 	},
 	{
 		"id": 10,
@@ -380,7 +380,7 @@
 		"id": 55,
 		"x": 23,
 		"y": 89,
-		"actions": []
+		"actions": 9
 	},
 	{
 		"id": 56,
@@ -392,13 +392,13 @@
 		"id": 57,
 		"x": 180,
 		"y": 80,
-		"actions": []
+		"actions": 4
 	},
 	{
 		"id": 58,
 		"x": 272,
 		"y": 27,
-		"actions": []
+		"actions": 7
 	},
 	{
 		"id": 59,
@@ -416,7 +416,7 @@
 		"id": 61,
 		"x": 86,
 		"y": 56,
-		"actions": []
+		"actions": 2
 	},
 	{
 		"id": 62,
@@ -476,7 +476,7 @@
 		"id": 71,
 		"x": 242,
 		"y": 21,
-		"actions": []
+		"actions": 9
 	},
 	{
 		"id": 72,
@@ -494,7 +494,7 @@
 		"id": 74,
 		"x": 95,
 		"y": 13,
-		"actions": []
+		"actions": 6
 	},
 	{
 		"id": 75,
@@ -530,7 +530,7 @@
 		"id": 80,
 		"x": 66,
 		"y": 42,
-		"actions": []
+		"actions": 3
 	},
 	{
 		"id": 81,
@@ -628,6 +628,20 @@
 		"y": 23,
 		"actions": [
 			{
+				"target": 1,
+				"element": null,
+				"x": 150,
+				"y": 100,
+				"delay": 0
+			},
+			{
+				"target": 1,
+				"element": null,
+				"x": 180,
+				"y": 90,
+				"delay": 0
+			},
+			{
 				"target": 2,
 				"element": "#astronaut2",
 				"x": 0,
@@ -639,7 +653,28 @@
 				"element": null,
 				"x": 100,
 				"y": 100,
-				"delay": 15000
+				"delay": 3000
+			},
+			{
+				"target": 1,
+				"element": null,
+				"x": 120,
+				"y": 130,
+				"delay": 0
+			},
+			{
+				"target": 1,
+				"element": null,
+				"x": 90,
+				"y": 130,
+				"delay": 0
+			},
+			{
+				"target": 1,
+				"element": null,
+				"x": 110,
+				"y": 160,
+				"delay": 0
 			}
 		]
 	},
@@ -647,24 +682,24 @@
 		"id": 97,
 		"x": 156,
 		"y": 48,
-		"actions": []
+		"actions": 10
 	},
 	{
 		"id": 98,
 		"x": 161,
 		"y": 89,
-		"actions": []
+		"actions": 6
 	},
 	{
 		"id": 99,
 		"x": 84,
 		"y": 84,
-		"actions": []
+		"actions": 5
 	},
 	{
 		"id": 100,
 		"x": 294,
 		"y": 45,
-		"actions": []
+		"actions": 2
 	}
 ]
