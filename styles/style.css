@@ -22,14 +22,33 @@
 
 .animal:hover {
 	background-color: #000;
-	transform: scale(3.5);
+	transform-origin: center top;
+	position: fixed;
+	transform:  scale(3.5,3.5) !important;
 	cursor: pointer;
+}
+
+.normal{
+	background-color: grey !important;
+}
+.sick{
+	background-color:rgb(214, 104, 0) !important;
+}
+
+.heat{
+	background-color: rgb(211, 0, 183) !important
 }
 
 .location {
 	position: absolute;
 	border: 1px solid #000;
 }
+
+.filter-type{
+	padding: 5px 25px;
+	color:#fff;
+}
+
 
 /* #location1{
     top: 15px;

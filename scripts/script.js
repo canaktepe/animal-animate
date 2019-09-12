@@ -1,4 +1,26 @@
 var viewModel = {
+
+	simulationStarted: ko.observable(false),
+
+	activeAction: ko.observable("1"),
+
+	animalFilterTypes: ko.observableArray([{
+			value: 1,
+			text: 'Normal',
+			checked: ko.observable(true)
+		},
+		{
+			value: 2,
+			text: 'Sick',
+			checked: ko.observable(true)
+		},
+		{
+			value: 3,
+			text: 'Heat',
+			checked: ko.observable(true)
+		}
+	]),
+
 	locations: ko.observableArray([{
 			id: 1,
 			name: 'location-1',
@@ -35,12 +57,52 @@ var viewModel = {
 		}
 	]),
 
+	selectAll: ko.observable(true),
+
+	selectAllFilter: function (data, event) {
+		const el = $(event.target),
+			active = el.prop('checked');
+
+		viewModel.selectAll(active);
+
+		ko.utils.arrayForEach(viewModel.animalFilterTypes(), function (filter) {
+			filter.checked(active)
+		})
+		return true;
+	},
+
+	selectFilter: function (data, event) {
+		const el = $(event.target),
+			active = el.prop('checked');
+
+		if (!active) viewModel.selectAll(false);
+		else {
+			let checkedFilterLength = viewModel.animalFilterTypes().filter(aft => {
+				return aft.checked()
+			}).length;
+			if (checkedFilterLength === viewModel.animalFilterTypes().length)
+				viewModel.selectAll(true);
+		}
+		return true;
+	},
+
 	getEndX: function (data) {
 		return `${parseFloat(data.width) - parseFloat(data.left)}px`;
 	},
 
 	getEndY: function (data) {
 		return `${parseFloat(data.height)}px`;
+	},
+
+	animalClassByStatus: function (animal) {
+		if (!animal.status) return;
+
+		switch (animal.status) {
+			case 2:
+				return 'sick';
+			case 3:
+				return 'heat';
+		}
 	},
 
 	locateAnimal: function (location) {
@@ -98,12 +160,12 @@ var viewModel = {
 		callback(time);
 	},
 
-	generateRandomActions: function (location,size) {
-		var actions=[];
-		for(var i = 1; i<=size ;i++){
+	generateRandomActions: function (location, size) {
+		var actions = [];
+		for (var i = 1; i <= size; i++) {
 
 			var rnd = randomPosition(location);
-			actions.push(	{
+			actions.push({
 				"target": 1,
 				"element": null,
 				"x": rnd.x,
@@ -120,7 +182,7 @@ var viewModel = {
 				let animalEl = $(`div#${animal.id}`);
 
 				if (typeof animal.actions === 'number') {
-					animal.actions = viewModel.generateRandomActions(l,animal.actions);
+					animal.actions = viewModel.generateRandomActions(l, animal.actions);
 				}
 
 				$.each(animal.actions, function (ai, action) {
@@ -151,6 +213,7 @@ var viewModel = {
 				});
 			})
 		);
+		viewModel.simulationStarted(true);
 	}
 };
 
@@ -159,8 +222,9 @@ function getAnimals(locationId, callback) {
 		id: locationId
 	}).done(function (data) {
 		var grepData = $.grep(data, function (item) {
+			item.status = typeof item.status === 'undefined' ? 1 : item.status
 			return locationId === 1 ? item.id > 0 && item.id <= 50 : item.id > 50;
-		});
+		})
 		return callback(grepData);
 	});
 }
@@ -209,6 +273,20 @@ function randomPosition(location) {
 	return rnd;
 }
 
+function filteredDisplay(element, value) {
+	if (typeof value() === 'undefined') return;
+
+	var length = viewModel.animalFilterTypes().filter(aft => {
+		return value() === aft.value && aft.checked() === true
+	}).length;
+
+	if (length === 0)
+		$(element).addClass('invisible');
+	else
+		$(element).removeClass('invisible');
+}
+
+
 ko.bindingHandlers.draggable = {
 	init: function (element, valueAccessor, allBindingsAccessor, vieModel, bindingContext) {
 		$(element).draggable();
@@ -230,20 +308,23 @@ ko.bindingHandlers.droppable = {
 	}
 }
 
+
+ko.bindingHandlers.filteredDisplay = {
+	init: function (element, value) {
+		filteredDisplay(element, value);
+	},
+	update: function (element, value) {
+		filteredDisplay(element, value);
+	},
+}
+
 $(document).ready(function () {
 	ko.utils.arrayForEach(viewModel.locations(), function (location) {
 		getAnimals(location.id, function (response) {
 			if (response.length === 0) return;
 			location.animals(ko.toJS(response));
 		});
-		
+
 	});
-
-
 	ko.applyBindings(viewModel);
-
-	setTimeout(() => {
-		viewModel.runActions();
-	}, 1000);
-
 });

@@ -12,9 +12,15 @@
 </head>
 
 <body>
-    <div class="container pt-3">
+    <div class="container pt-3 pb-3">
         <div class="row">
-            <button class="btn btn-primary d-none" data-bind="click:runActions.bind(this)" id="btnAnimate">Animate</button>
+            <h3>FarmGraph Farm Simulation</h3>
+            <div class="float-right  ml-auto">
+                <div class="mt-1 float-left" data-bind="visible:simulationStarted"> Simulation has started</div>
+                <button class="ml-2 btn btn-primary float-right" data-bind="click:runActions.bind(this),class:simulationStarted() ? 'btn-danger' : 'btn-primary',text:simulationStarted() ? 'Stop Simulation':'Start Simulation'" id="btnAnimate">Start Simulation</button>
+            </div>
+        </div>
+        <div class="row">
             <div id="farm" data-bind="foreach: { data: locations, as: 'location' }">
                 <div data-bind="style:{top:location.top,left:location.left,width:location.width,height:location.height},foreach:{data:astronauts,as:'astronaut'}"
                     class="location">
@@ -24,7 +30,7 @@
                         <div class="name" data-bind="text:astronaut.name"></div>
                     </div>
                     <!--ko foreach: {data:location.animals(),as:'animal'}-->
-                    <div data-bind="text:animal.id,style:$root.locateAnimal(location),attr:{id:animal.id}" 
+                    <div data-bind="text:animal.id,style:$root.locateAnimal(location),attr:{id:animal.id},class:$root.animalClassByStatus(animal),filteredDisplay:animal.status"
                         class="animal">
                     </div>
                     <!--/ko-->
@@ -32,7 +38,46 @@
             </div>
         </div>
         <hr>
-        <div class="row" data-bind="foreach:{ data: locations, as: 'location' }">
+        <div class="row">
+            <div class="form-check form-check-inline bg-light border border-1 p-2">
+                <input class="form-check-input" type="radio" name="blocks" id="rbAnimalFilter" value="1"
+                    data-bind="checked:activeAction">
+                <label class="form-check-label" for="rbAnimalFilter">Animal filters</label>
+            </div>
+            <div class="form-check form-check-inline bg-light border border-1 p-2">
+                <input class="form-check-input" type="radio" name="blocks" id="chkLocationPosition" value="2"
+                    data-bind="checked:activeAction">
+                <label class="form-check-label" for="chkLocationPosition">Show locations position</label>
+            </div>
+
+            <div class="form-check form-check-inline bg-light border border-1 p-2">
+                <input class="form-check-input" type="radio" name="blocks" id="chkAnimalPosition" value="3"
+                    data-bind="checked:activeAction">
+                <label class="form-check-label" for="chkAnimalPosition">Show animal position</label>
+            </div>
+        </div>
+        <hr>
+        <div class="row" data-bind="visible:activeAction()==1">
+            <div class="form">
+                <div class="form-check filter-type text-dark mb-1">
+                    <input class="form-check-input" type="checkbox" value="-1" name="allFilter" id="allAnimals" checked
+                        data-bind="checked:selectAll,click:selectAllFilter">
+                    <label class="form-check-label" for="allAnimals">
+                        All
+                    </label>
+                </div>
+                <!--ko foreach:{data:animalFilterTypes,as:'filterType'}-->
+                <div class="form-check filter-type mb-1" data-bind="class:filterType.text.toLowerCase()">
+                    <input class="form-check-input" type="checkbox"
+                        data-bind="value:filterType.value,checked:filterType.checked,click:$parent.selectFilter,attr:{id:filterType.text.toLowerCase()}"
+                        name="animalFilter">
+                    <label class="form-check-label"
+                        data-bind="text:filterType.text,attr:{for:filterType.text.toLowerCase()}"></label>
+                </div>
+                <!--/ko-->
+            </div>
+        </div>
+        <div class="row" data-bind="foreach:{ data: locations, as: 'location' },visible:activeAction()==2">
             <div class="col-md-3">
                 <div class="card">
                     <h5 class="card-header font-weight-bold" data-bind="text:location.name">Location 1</h5>
@@ -40,7 +85,7 @@
                         <li class="list-group-item">StartX<span class="float-right font-weight-normal"
                                 data-bind="text:location.left"></span></li>
                         <li class="list-group-item">EndX<span class="float-right font-weight-normal"
-                                data-bind="text:$root.getEndX(location)">xxxxxxxx</span></li>
+                                data-bind="text:$root.getEndX(location)"></span></li>
                         <li class="list-group-item">StartY<span class="float-right font-weight-normal"
                                 data-bind="text:location.top"></span></li>
                         <span class="list-group-item">EndY<span class="float-right font-weight-normal"
@@ -48,7 +93,6 @@
                     </ul>
                 </div>
             </div>
-
         </div>
     </div>
 
