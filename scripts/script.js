@@ -1,3 +1,5 @@
+// import jquery from '../node_modules/jquery/dist/jquery';
+
 var viewModel = {
 
 	simulationStarted: ko.observable(false),

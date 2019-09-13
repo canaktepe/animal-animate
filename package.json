@@ -16,6 +16,16 @@
     "knockout": "^3.5.0"
   },
   "devDependencies": {
-    "live-server": "^1.2.1"
+    "@babel/core": "^7.6.0",
+    "@babel/preset-env": "^7.6.0",
+    "@babel/preset-es2015": "^7.0.0-beta.53",
+    "babel-cli": "^6.26.0",
+    "babelify": "^10.0.0",
+    "grunt": "^1.0.4",
+    "grunt-babel": "^7.0.0",
+    "grunt-browserify": "^5.3.0",
+    "grunt-contrib-concat": "^1.0.1",
+    "live-server": "^1.2.1",
+    "load-grunt-tasks": "^5.1.0"
   }
 }
