@@ -25,7 +25,7 @@
                 <div data-bind="style:{top:location.top,left:location.left,width:location.width,height:location.height},foreach:{data:astronauts,as:'astronaut'}"
                     class="location">
                     <div class="name" data-bind="text:location.name"></div>
-                    <div data-bind="style:{top:astronaut.top,left:astronaut.left,width:astronaut.width,height:astronaut.height},attr:{id:astronaut.id},droppable"
+                    <div data-bind="style:{top:astronaut.top,left:astronaut.left,width:astronaut.width,height:astronaut.height},attr:{id:astronaut.id}"
                         class="astronaut">
                         <div class="name" data-bind="text:astronaut.name"></div>
                     </div>

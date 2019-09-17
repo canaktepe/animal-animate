@@ -289,28 +289,6 @@ function filteredDisplay(element, value) {
 }
 
 
-ko.bindingHandlers.draggable = {
-	init: function (element, valueAccessor, allBindingsAccessor, vieModel, bindingContext) {
-		$(element).draggable();
-	}
-};
-
-ko.bindingHandlers.droppable = {
-	init: function (element) {
-		$(element).droppable({
-			drop: function (event, ui) {
-				$(this)
-					.addClass("milking")
-			},
-			out: function (event, ui) {
-				$(this)
-					.removeClass("milking")
-			}
-		});
-	}
-}
-
-
 ko.bindingHandlers.filteredDisplay = {
 	init: function (element, value) {
 		filteredDisplay(element, value);
