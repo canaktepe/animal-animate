@@ -23,38 +23,220 @@ var viewModel = {
 		}
 	]),
 
+	vectors: ko.observableArray([{
+		id: 1,
+		name: 'Vector',
+		top: '15px',
+		left: '1265px',
+		width: '80px',
+		height: '45px'
+	}]),
+
+	feedAreas: ko.observableArray([{
+		id: 1,
+		name: 'Voergang',
+		top: '242px',
+		left: '0px',
+		width: '1250px',
+		height: '106px'
+	}]),
+
 	locations: ko.observableArray([{
 			id: 1,
-			name: 'location-1',
+			name: 'Melkveestal',
 			top: '15px',
-			left: '15px',
-			width: '1170px',
-			height: '180px',
+			left: '150px',
+			width: '1100px',
+			height: '225px',
+			feedFences: ko.observableArray([{
+				id: 'fence1',
+				name: 'Melkkoeien',
+				top: '203px',
+				left: '135px',
+				width: '480px',
+				height: '20px'
+			}]),
+			cubicles: ko.observableArray([{
+					id: '1',
+					name: 'cubicle1',
+					top: '5px',
+					left: '200px',
+					cubicSize: 20,
+					door: 'down'
+				},
+				{
+					id: '2',
+					name: 'cubicle2',
+					top: '80px',
+					left: '200px',
+					cubicSize: 10,
+					door: 'up'
+				},
+				{
+					id: '3',
+					name: 'cubicle3',
+					top: '119px',
+					left: '200px',
+					cubicSize: 10,
+					door: 'down'
+				},
+				{
+					id: '4',
+					name: 'cubicle4',
+					top: '80px',
+					left: '410px',
+					cubicSize: 10,
+					door: 'up'
+				},
+				{
+					id: '5',
+					name: 'cubicle5',
+					top: '119px',
+					left: '410px',
+					cubicSize: 10,
+					door: 'down'
+				},
+				{
+					id: '6',
+					name: 'cubicle6',
+					top: '80px',
+					left: '620px',
+					cubicSize: 10,
+					door: 'up'
+				},
+				{
+					id: '7',
+					name: 'cubicle7',
+					top: '119px',
+					left: '620px',
+					cubicSize: 10,
+					door: 'down'
+				},
+				{
+					id: '8',
+					name: 'cubicle8',
+					top: '80px',
+					left: '830px',
+					cubicSize: 10,
+					door: 'up'
+				},
+				{
+					id: '9',
+					name: 'cubicle9',
+					top: '119px',
+					left: '830px',
+					cubicSize: 10,
+					door: 'down'
+				},
+				{
+					id: '10',
+					name: 'cubicle10',
+					top: '5px',
+					left: '690px',
+					cubicSize: 21,
+					door: 'down'
+				}
+			]),
 			astronauts: ko.observableArray([{
 				id: 'astronaut1',
 				name: 'A1',
+				top: '5px',
+				left: '585px',
+				width: '100px',
+				height: '40px'
+			}, {
+				id: 'astronaut3',
+				name: 'A3',
 				top: '25px',
-				left: '15px',
-				width: '150px',
-				height: '50px'
+				left: '10px',
+				width: '40px',
+				height: '80px'
+			}, {
+				id: 'astronaut4',
+				name: 'A4',
+				top: '120px',
+				left: '10px',
+				width: '40px',
+				height: '80px'
 			}]),
 			animals: ko.observableArray([])
 		},
 		{
 			id: 2,
-			name: 'location-2',
-			top: '300px',
-			left: '15px',
-			width: '1170px',
-			height: '180px',
+			name: 'verse koeien',
+			top: '350px',
+			left: '150px',
+			width: '1100px',
+			height: '165px',
+			feedFences: ko.observableArray([{
+					id: '1',
+					name: 'Droog2',
+					top: '0px',
+					left: '145px',
+					width: '130px',
+					height: '20px'
+				},
+				{
+					id: '2',
+					name: 'Verse koeien',
+					top: '0px',
+					left: '700px',
+					width: '385px',
+					height: '20px'
+				}
+			]),
+			cubicles: ko.observableArray([{
+					id: 1,
+					name: 'cubicle1',
+					top: '120px',
+					left: '87px',
+					cubicSize: 26,
+					door: 'up'
+				},
+				{
+					id: 2,
+					name: 'cubicle1',
+					top: '-1px',
+					left: '280px',
+					cubicSize: 12,
+					door: 'down'
+				},
+				{
+					id: 3,
+					name: 'cubicle1',
+					top: '120px',
+					left: '688px',
+					cubicSize: 21,
+					door: 'up'
+				},
+				{
+					id: 4,
+					name: 'cubicle1',
+					top: '5px',
+					left: '5px',
+					cubicSize: 8,
+					door: 'right'
+				}
+			]),
 			astronauts: ko.observableArray([{
 				id: 'astronaut2',
 				name: 'A2',
-				top: '105px',
-				left: '1005px',
-				width: '150px',
-				height: '50px'
+				top: '120px',
+				left: '585px',
+				width: '100px',
+				height: '40px'
 			}]),
+			animals: ko.observableArray([])
+		},
+		{
+			id: 3,
+			name: 'Droog1',
+			top: '400px',
+			left: '1270px',
+			width: '75px',
+			height: '115px',
+			cubicles: ko.observableArray([]),
+			astronauts: ko.observableArray([]),
 			animals: ko.observableArray([])
 		}
 	]),
@@ -117,8 +299,6 @@ var viewModel = {
 
 		return {
 			transform: 'translate(' + rnd.x + 'px,' + rnd.y + 'px)'
-			// left: rnd.x,
-			// top: rnd.y
 		};
 	},
 
@@ -178,6 +358,27 @@ var viewModel = {
 		return actions;
 	},
 
+	cubicDirection: function (door) {
+		if (door === 'down' || door === 'up') {
+			return 'list-group-horizontal'
+		}
+	},
+
+	doorDirection: function (door) {
+		switch (door) {
+			case 'down':
+				return 'border-bottom-0';
+			case 'up':
+				return 'border-top-0';
+			case 'right':
+				return 'border-right-0';
+			case 'left':
+				return 'border-left-0';
+			default:
+				return '';
+		}
+	},
+
 	runActions: function () {
 		viewModel.locations().map(l =>
 			l.animals().forEach(function (animal) {
@@ -225,7 +426,7 @@ function getAnimals(locationId, callback) {
 	}).done(function (data) {
 		var grepData = $.grep(data, function (item) {
 			item.status = typeof item.status === 'undefined' ? 1 : item.status
-			return locationId === 1 ? item.id > 0 && item.id <= 50 : item.id > 50;
+			return locationId === item.locId;
 		})
 		return callback(grepData);
 	});
@@ -287,7 +488,6 @@ function filteredDisplay(element, value) {
 	else
 		$(element).removeClass('invisible');
 }
-
 
 ko.bindingHandlers.filteredDisplay = {
 	init: function (element, value) {

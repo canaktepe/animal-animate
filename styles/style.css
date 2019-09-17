@@ -1,10 +1,19 @@
-.container {
-	max-width: 1200px;
+@import url('https://fonts.googleapis.com/css?family=Saira+Extra+Condensed&display=swap');
+body{
+	font-family: 'Saira Extra Condensed', sans-serif;
+	background-image:url('https://clipartstation.com/wp-content/uploads/2017/11/farm-field-clipart-10.jpg');
+	font-size: 1.2em;
+	background-size: 100%;
 }
+.container {
+	max-width: 1360px;
+}
+
 #farm {
-	border: 1px solid blue;
-	width: 1200px;
-	height: 500px;
+	border: 1px solid #a61919;
+	background-color: rgba(255, 255, 255, 0.85);
+	width: 1360px;
+	height: 530px;
 	position: relative;
 	overflow: hidden;
 }
@@ -12,41 +21,40 @@
 .animal {
 	position: absolute;
 	background-color: grey;
-	width: 10px;
-	height: 10px;
+	width: 8px;
+	height: 8px;
 	border-radius: 50%;
-	transition: all 0.2s ease-in-out;
+	transition: all 0.2s ease ;
+	transform-origin: center center;
 	overflow: hidden;
 	text-indent: 999em;
 }
 
 .animal:hover {
 	background-color: #000;
-	transform-origin: center top;
-	position: fixed;
-	transform:  scale(3.5,3.5) !important;
+	transform:translate(100%, 100%) scale(3.5) !important;
 	cursor: pointer;
 }
 
-.normal{
+.normal {
 	background-color: grey !important;
 }
-.sick{
-	background-color:rgb(214, 104, 0) !important;
+
+.sick {
+	background-color: rgb(214, 104, 0) !important;
 }
 
-.heat{
+.heat {
 	background-color: rgb(211, 0, 183) !important
 }
 
 .location {
-	position: absolute;
 	border: 1px solid #000;
 }
 
-.filter-type{
+.filter-type {
 	padding: 5px 25px;
-	color:#fff;
+	color: #fff;
 }
 
 
@@ -65,11 +73,8 @@
   } */
 
 .astronaut {
-	position: absolute;
 	color: white;
-	line-height: 25px;
-	background: red;
-	font-size: 13px;
+	background: rgba(195, 10, 20, 0.9);
 	overflow: hidden;
 	font-weight: bold;
 }
@@ -94,11 +99,46 @@
 
 .name {
 	position: absolute;
-	left: 5px;
-	top: 5px;
 	text-align: inherit;
+	top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .milking {
 	background-color: green;
+}
+
+/* cubicles */
+ul.list-group-horizontal.cubicles li {
+	width: 20px;
+	height: 40px;
+}
+
+ul.cubicles li {
+	background-color: rgba(226, 226, 226, 0.5);
+	padding: 0px;
+	width: 40px;
+	height: 20px;
+}
+
+
+/* feedAreas */
+.feed-area {
+	background-color: rgba(127, 127, 127, 0.9);
+	color: #fff;
+}
+
+/* feedfences */
+
+.fence {
+	background: rgba(198, 140, 83, 0.9);
+	overflow: hidden;
+}
+
+/* vectors */
+
+.vector {
+	background: rgba(195, 10, 20, 0.9);
+	overflow: hidden;
 }
