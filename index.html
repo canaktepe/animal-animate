@@ -15,11 +15,16 @@
     <div class="container pt-3 pb-3">
         <div class="row">
             <h3>FarmGraph Farm Simulator</h3>
-            <div class="float-right  ml-auto">
+            <div class="float-right  ml-auto mb-2">
                 <div class="mt-1 float-left" data-bind="visible:simulationStarted"> Simulation has started</div>
-                <button class="ml-2 btn btn-dark float-right"
+                <button class="ml-2 btn btn-dark"
                     data-bind="click:runActions.bind(this),class:simulationStarted() ? 'btn-danger' : 'btn-dark',text:simulationStarted() ? 'Stop Simulation':'Start Simulation'"
                     id="btnAnimate">Start Simulation</button>
+                <button type="button" class="btn btn-light"
+                    data-bind="click:unSelecAllAnimals,enable:$root.selectedAnimals().length>0,class:$root.selectedAnimals().length===0 ? 'btn-light' : 'btn-warning'"><span
+                        class="badge badge-dark"
+                        data-bind="text:$root.selectedAnimals().length,class:$root.selectedAnimals().length===0 ? 'badge-dark' : 'badge-danger'">0</span>
+                    Deselect Animals</button>
             </div>
         </div>
         <div class="row">
@@ -67,8 +72,10 @@
                     </div>
                     <!--/ko-->
                     <!--ko foreach: {data:location.animals,as:'animal'}-->
-                    <div data-bind="text:animal.id,style:$root.locateAnimal(location),attr:{id:animal.id},class:$root.animalClassByStatus(animal),filteredDisplay:animal.status"
+                    <div data-bind="style:$root.locateAnimal(location),attr:{id:animal.id},class:$root.animalClassByStatus(animal),filteredDisplay:animal.status,animalHover"
                         class="animal">
+                        <div data-bind="text:animal.id,dblClick:$root.openAnimalInformation.bind(this,animal),click:$root.animalSelect.bind(this),isSelectedAnimal:animal"
+                            class="shadow shadow-invisible">shadow</div>
                     </div>
                     <!--/ko-->
                 </div>

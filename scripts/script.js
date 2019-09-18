@@ -6,6 +6,8 @@ var viewModel = {
 
 	activeAction: ko.observable("1"),
 
+	selectedAnimals: ko.observableArray([]),
+
 	animalFilterTypes: ko.observableArray([{
 			value: 1,
 			text: 'Normal',
@@ -379,11 +381,36 @@ var viewModel = {
 		}
 	},
 
+	openAnimalInformation: function (el, x) {
+
+		console.log(el);
+
+	},
+
+	animalSelect: function (data, event) {
+		var exists = ko.utils.arrayFilter(viewModel.selectedAnimals(), function (animal, i) {
+			return animal.id === data.id;
+		}).length > 0;
+		if (exists) {
+			viewModel.selectedAnimals.remove(function (animal) {
+				return animal === data;
+			})
+		} else {
+			viewModel.selectedAnimals.push(data);
+		}
+	},
+
+	unSelecAllAnimals: function () {
+		viewModel.selectedAnimals.removeAll();
+	},
+
 	runActions: function () {
 		viewModel.locations().map(l =>
 			l.animals().forEach(function (animal) {
 				let animalEl = $(`div#${animal.id}`);
+				if (animal.actions.length === 0) return;
 
+				animalEl.addClass('action')
 				if (typeof animal.actions === 'number') {
 					animal.actions = viewModel.generateRandomActions(l, animal.actions);
 				}
@@ -489,6 +516,20 @@ function filteredDisplay(element, value) {
 		$(element).removeClass('invisible');
 }
 
+function isSelectedAnimal(element, valueAccessor) {
+	var el = $(element);
+	var inner = ko.utils.unwrapObservable(valueAccessor());
+	var exist = ko.utils.arrayFilter(viewModel.selectedAnimals(), function (animal, i) {
+		return animal.id === inner.id;
+	}).length > 0;
+
+	if (exist) {
+		el.addClass("selected")
+	} else {
+		el.removeClass("selected")
+	}
+}
+
 ko.bindingHandlers.filteredDisplay = {
 	init: function (element, value) {
 		filteredDisplay(element, value);
@@ -497,6 +538,40 @@ ko.bindingHandlers.filteredDisplay = {
 		filteredDisplay(element, value);
 	},
 }
+
+ko.bindingHandlers.animalHover = {
+	init: function (element, value) {
+		var el = $(element);
+		el.hover(function () {
+			if ($(this).find('.shadow').hasClass('selected')) return;
+			$(this).find('.shadow').removeClass('shadow-invisible')
+		}, function () {
+			if ($(this).find('.shadow').hasClass('selected')) return;
+			$(this).find('.shadow').addClass('shadow-invisible')
+		})
+	}
+}
+
+ko.bindingHandlers.isSelectedAnimal = {
+	init: function (element, valueAccessor) {
+		isSelectedAnimal(element, valueAccessor);
+	},
+	update: function (element, valueAccessor) {
+		isSelectedAnimal(element, valueAccessor);
+		ko.bindingHandlers.value.update(element, valueAccessor);
+	}
+}
+
+ko.bindingHandlers.dblClick = {
+	init: function (element, valueAccessor, allBindingsAccessor, viewModel) {
+		$(element).dblclick(function () {
+			// extract 
+			var inner = ko.utils.unwrapObservable(valueAccessor());
+			// invoke
+			inner();
+		});
+	}
+};
 
 $(document).ready(function () {
 	ko.utils.arrayForEach(viewModel.locations(), function (location) {
@@ -507,4 +582,10 @@ $(document).ready(function () {
 
 	});
 	ko.applyBindings(viewModel);
+
+	viewModel.selectedAnimals.subscribe(function (arr) {
+		if (arr.length === 0)
+			$('.shadow').removeClass('selected').trigger('mouseout');
+	});
+
 });
