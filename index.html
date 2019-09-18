@@ -12,6 +12,203 @@
 </head>
 
 <body>
+
+    <div class="modal fade cow-card" id="animalDetails" tabindex="-1" role="dialog" aria-labelledby="myAnimalDetails"
+        aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header lely-red-bg text-white">
+                    <h4 class="modal-title" id="exampleModalLongTitle">Cow Card</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-4 border-right">
+                            <img src="/images/cow.jpg"
+                                class="img-responsive rounded-circle border cow-pic float-left mr-2" alt="Cinque Terre">
+                            <div class="text-center font-weight-bold">
+                                <h5 class="font-weight-bold lely-red">Animal Number</h5>
+                                <p class="animal-id" data-bind="text:'#'+animalDetails.id"></p>
+                            </div>
+                            <div class="row">
+                                <ul class="list-group w-100">
+                                    <li class="list-group-item border-right-0">
+                                        <div class="row">
+                                            <div class="col border-right lely-red font-weight-bold">
+                                                Name
+                                            </div>
+                                            <div class="col">
+                                                Lizz
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item border-right-0">
+                                        <div class="row">
+                                            <div class="col border-right lely-red font-weight-bold">
+                                                Responder
+                                            </div>
+                                            <div class="col">
+                                                1664015
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item border-right-0">
+                                        <div class="row">
+                                            <div class="col border-right lely-red font-weight-bold">
+                                                Birth date
+                                            </div>
+                                            <div class="col">
+                                                30-07-2016
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item border-right-0">
+                                        <div class="row">
+                                            <div class="col border-right lely-red font-weight-bold">
+                                                Group
+                                            </div>
+                                            <div class="col">
+                                                2x per dag melken
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item border-right-0">
+                                        <div class="row">
+                                            <div class="col border-right lely-red font-weight-bold">
+                                                Location
+                                            </div>
+                                            <div class="col">
+                                                verse koeien
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item border-right-0">
+                                        <div class="row">
+                                            <div class="col border-right lely-red font-weight-bold">
+                                                Gender
+                                            </div>
+                                            <div class="col">
+                                                Female
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item border-right-0">
+                                        <div class="row">
+                                            <div class="col border-right lely-red font-weight-bold">
+                                                Life No
+                                            </div>
+                                            <div class="col">
+                                                DE 0539461317
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item border-right-0">
+                                        <div class="row">
+                                            <div class="col border-right lely-red font-weight-bold">
+                                                I&R
+                                            </div>
+                                            <div class="col">
+                                                61317
+
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item border-right-0">
+                                        <div class="row">
+                                            <div class="col border-right lely-red font-weight-bold">
+                                                Father Life Number
+                                            </div>
+                                            <div class="col">
+                                                DE 0539461163
+
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item border-right-0">
+                                        <div class="row">
+                                            <div class="col border-right lely-red font-weight-bold">
+                                                Mother Life Number
+                                            </div>
+                                            <div class="col">
+                                                RE 0539429120
+
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </div>
+                        <div class="col-8">
+                            <div class=" mb-3">
+                                <div class="table-responsive">
+                                <table class="table table-sm">
+                                    <tbody>
+                                    <tr>
+                                        <th>
+                                            Calving Date</th>
+                                        <td>
+                                            20-10-2018
+                                        </td>
+
+                                        <th>Reproduction Status</th>
+<td>Pregnant(241)
+    </td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            Lactation Number
+                                        </th>
+                                        <td>1</td>
+                                        <th>Expected Calving</th>
+                                        <td>27-10-2019</td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            Lactation Days</th>
+                                        <td>333</td>
+                                        <th>Expected Dry Off</th>
+                                        <td>12-09-2019</td>
+                                    </tr>
+                                </tbody>
+                                </table>
+                            </div>
+                            </div>
+                            <ul class="nav nav-pills mb-3" id="cow-details-tab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home"
+                                        role="tab" aria-controls="pills-home" aria-selected="true">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile"
+                                        role="tab" aria-controls="pills-profile" aria-selected="false">Profile</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact"
+                                        role="tab" aria-controls="pills-contact" aria-selected="false">Contact</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content" id="pills-tabContent">
+                                <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
+                                    aria-labelledby="pills-home-tab">Home</div>
+                                <div class="tab-pane fade" id="pills-profile" role="tabpanel"
+                                    aria-labelledby="pills-profile-tab">Profile</div>
+                                <div class="tab-pane fade" id="pills-contact" role="tabpanel"
+                                    aria-labelledby="pills-contact-tab">Contact</div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="container pt-3 pb-3">
         <div class="row">
             <h3>FarmGraph Farm Simulator</h3>
@@ -74,7 +271,7 @@
                     <!--ko foreach: {data:location.animals,as:'animal'}-->
                     <div data-bind="style:$root.locateAnimal(location),attr:{id:animal.id},class:$root.animalClassByStatus(animal),filteredDisplay:animal.status,animalHover"
                         class="animal">
-                        <div data-bind="text:animal.id,dblClick:$root.openAnimalInformation.bind(this,animal),click:$root.animalSelect.bind(this),isSelectedAnimal:animal"
+                        <div data-bind="text:animal.id,customClick:animal,isSelectedAnimal:animal"
                             class="shadow shadow-invisible">shadow</div>
                     </div>
                     <!--/ko-->
@@ -143,6 +340,7 @@
 
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <script src="node_modules/jquery-ui-dist/jquery-ui.min.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="node_modules/knockout/build/output/knockout-latest.js"></script>
     <script src="node_modules/jquery.transit/jquery.transit.js"></script>
     <script src="scripts/script.js" type="text/javascript"></script>

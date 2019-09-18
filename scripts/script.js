@@ -2,11 +2,15 @@
 
 var viewModel = {
 
+	animalDetailsModal: $('#animalDetails'),
+
 	simulationStarted: ko.observable(false),
 
 	activeAction: ko.observable("1"),
 
 	selectedAnimals: ko.observableArray([]),
+
+	selectedAnimal: ko.observable(null),
 
 	animalFilterTypes: ko.observableArray([{
 			value: 1,
@@ -381,10 +385,9 @@ var viewModel = {
 		}
 	},
 
-	openAnimalInformation: function (el, x) {
-
-		console.log(el);
-
+	openAnimalInformation: function (data) {
+		viewModel.selectedAnimal(data);
+		viewModel.animalDetailsModal.modal('show');
 	},
 
 	animalSelect: function (data, event) {
@@ -403,6 +406,11 @@ var viewModel = {
 	unSelecAllAnimals: function () {
 		viewModel.selectedAnimals.removeAll();
 	},
+
+
+	get animalDetails() {
+		return viewModel.selectedAnimal() ? viewModel.selectedAnimal() : ''
+	  },
 
 	runActions: function () {
 		viewModel.locations().map(l =>
@@ -530,6 +538,14 @@ function isSelectedAnimal(element, valueAccessor) {
 	}
 }
 
+function animalSelect(data) {
+	viewModel.animalSelect(data);
+}
+
+function openAnimalInformation(data) {
+	viewModel.openAnimalInformation(data);
+}
+
 ko.bindingHandlers.filteredDisplay = {
 	init: function (element, value) {
 		filteredDisplay(element, value);
@@ -558,20 +574,33 @@ ko.bindingHandlers.isSelectedAnimal = {
 	},
 	update: function (element, valueAccessor) {
 		isSelectedAnimal(element, valueAccessor);
-		ko.bindingHandlers.value.update(element, valueAccessor);
 	}
 }
 
-ko.bindingHandlers.dblClick = {
+ko.bindingHandlers.customClick = {
 	init: function (element, valueAccessor, allBindingsAccessor, viewModel) {
-		$(element).dblclick(function () {
-			// extract 
-			var inner = ko.utils.unwrapObservable(valueAccessor());
-			// invoke
-			inner();
-		});
+		var timer = 0;
+		var delay = 200;
+		var prevent = false;
+
+		var data = ko.utils.unwrapObservable(valueAccessor());
+		$(element)
+			.on("click", function () {
+				timer = setTimeout(function () {
+					if (!prevent) {
+						animalSelect(data)
+					}
+					prevent = false;
+				}, delay);
+			})
+			.on("dblclick", function () {
+				clearTimeout(timer);
+				prevent = true;
+				openAnimalInformation(data);
+			});
 	}
 };
+
 
 $(document).ready(function () {
 	ko.utils.arrayForEach(viewModel.locations(), function (location) {
@@ -587,5 +616,18 @@ $(document).ready(function () {
 		if (arr.length === 0)
 			$('.shadow').removeClass('selected').trigger('mouseout');
 	});
+
+
+
+	viewModel.animalDetailsModal.modal({
+			keyboard: false,
+			// show: false
+		})
+		.on('shown.bs.modal',function(e){
+			viewModel.selectedAnimal(viewModel.locations()[0].animals()[0])
+		})
+		.on('hidden.bs.modal', function (e) {
+			viewModel.selectedAnimal(null);
+		})
 
 });
