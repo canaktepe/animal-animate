@@ -6,8 +6,6 @@ var viewModel = {
 
 	simulationStarted: ko.observable(false),
 
-	activeAction: ko.observable("1"),
-
 	selectedAnimals: ko.observableArray([]),
 
 	selectedAnimal: ko.observable(null),
@@ -35,7 +33,38 @@ var viewModel = {
 		top: '15px',
 		left: '1265px',
 		width: '80px',
-		height: '45px'
+		height: '45px',
+		actions: [{
+			"target": 1,
+			"element": null,
+			"x": 1265,
+			"y": 250,
+			"delay": 2000
+		},{
+			"target": 1,
+			"element": null,
+			"x": 150,
+			"y": 250,
+			"delay": 5000
+		},{
+			"target": 1,
+			"element": null,
+			"x": 150,
+			"y": 290,
+			"delay": 5000
+		},{
+			"target": 1,
+			"element": null,
+			"x": 1265,
+			"y": 290,
+			"delay": 5000
+		},{
+			"target": 1,
+			"element": null,
+			"x": 1265,
+			"y": 15,
+			"delay": 5000
+		}]
 	}]),
 
 	feedAreas: ko.observableArray([{
@@ -328,21 +357,24 @@ var viewModel = {
 		return arr;
 	},
 
-	calculateDuration: function (el, targetX, targetY, callback) {
+	calculateDuration: function (type, el, targetX, targetY, callback) {
 		var style = window.getComputedStyle(el.get(0));
+
 		var matrix = new WebKitCSSMatrix(style.webkitTransform);
 
 		var elTranslateX = matrix.m41,
 			elTranslateY = matrix.m42;
 
-		var speed = 0.5,
+		var animalSpeed = 0.5;
+
+		var speed = type === 'a' ? animalSpeed : animalSpeed * 15,
 			animalLocation = {
 				x: el.x ? el.x : elTranslateX,
 				y: el.y ? el.y : elTranslateY
 			},
 			sourceLongAxis = Math.max(animalLocation.x, animalLocation.y),
 			targetLongAxis = Math.max(targetX, targetY),
-			distance = Math.abs(sourceLongAxis - targetLongAxis),
+			distance = sourceLongAxis === targetLongAxis ? targetLongAxis : Math.abs(sourceLongAxis - targetLongAxis),
 			time = distance / (speed / 100);
 
 		callback(time);
@@ -386,6 +418,7 @@ var viewModel = {
 	},
 
 	openAnimalInformation: function (data) {
+		$('#cow-details-tab').find('a:first').trigger('click');
 		viewModel.selectedAnimal(data);
 		viewModel.animalDetailsModal.modal('show');
 	},
@@ -407,12 +440,49 @@ var viewModel = {
 		viewModel.selectedAnimals.removeAll();
 	},
 
-
 	get animalDetails() {
 		return viewModel.selectedAnimal() ? viewModel.selectedAnimal() : ''
-	  },
+	},
 
 	runActions: function () {
+
+		//vector animations
+		ko.utils.arrayForEach(viewModel.vectors(), function (vector, i) {
+			let vectorEl = $(`div#vector-${vector.id}`);
+			if (typeof vector.actions === 'number') {
+				vector.actions = viewModel.generateRandomActions(l, vector.actions);
+			}
+
+			$.each(vector.actions, function (vi, action) {
+				let x, y;
+				switch (action.target) {
+					case 1:
+						x = action.x;
+						y = action.y;
+						break;
+					case 2:
+						let targetPosition = getPositionAtCenter(action.element);
+						x = targetPosition.x;
+						y = targetPosition.y;
+						break;
+				}
+
+				viewModel.calculateDuration('d', vectorEl, x, y, function (duration) {
+					vectorEl.x = x;
+					vectorEl.y = y;
+					var delay = action.delay;
+					vectorEl.queue(function () {
+						$(this).delay(delay).transition({
+							x: x,
+							y: y
+						}, duration, 'linear').dequeue();
+					})
+				})
+			});
+		})
+
+
+		//animal animations
 		viewModel.locations().map(l =>
 			l.animals().forEach(function (animal) {
 				let animalEl = $(`div#${animal.id}`);
@@ -437,7 +507,7 @@ var viewModel = {
 							break;
 					}
 
-					viewModel.calculateDuration(animalEl, x, y, function (duration) {
+					viewModel.calculateDuration('a', animalEl, x, y, function (duration) {
 						animalEl.x = x;
 						animalEl.y = y;
 						var delay = action.delay;
@@ -511,11 +581,12 @@ function randomPosition(location) {
 	return rnd;
 }
 
-function filteredDisplay(element, value) {
-	if (typeof value() === 'undefined') return;
+function filteredDisplay(element, valueAccessor) {
+	if (typeof valueAccessor() === 'undefined') return;
 
+	var status = ko.utils.unwrapObservable(valueAccessor());
 	var length = viewModel.animalFilterTypes().filter(aft => {
-		return value() === aft.value && aft.checked() === true
+		return status === aft.value && aft.checked() === true
 	}).length;
 
 	if (length === 0)
@@ -601,6 +672,179 @@ ko.bindingHandlers.customClick = {
 	}
 };
 
+ko.bindingHandlers.transform = {
+	init: function (element, valueAccessor, allBindingsAccessor, viewModel) {
+		var data = ko.utils.unwrapObservable(valueAccessor());
+		$(element).css({
+			'transform': 'translate(' + data.left + ', ' + data.top + ')',
+		})
+	}
+};
+
+
+function loadChart() {
+	var options = {
+		exportEnabled: true,
+		// theme:'light1',
+		animationEnabled: true,
+		title: {
+			text: "Activity Graph",
+			fontSize: 15,
+			margin: 20
+		},
+		axisX: {
+			title: "Date Time (Lac.Days)"
+		},
+		axisY: {
+			title: "Healt Probability Threeshould / Healt Probability",
+			titleFontColor: "#4F81BC",
+			lineColor: "#4F81BC",
+			labelFontColor: "#4F81BC",
+			tickColor: "#4F81BC",
+			includeZero: false
+		},
+		axisY2: {
+			title: "Total eating minutes",
+			titleFontColor: "#C0504E",
+			lineColor: "#C0504E",
+			labelFontColor: "#C0504E",
+			tickColor: "#C0504E",
+			includeZero: false
+		},
+		toolTip: {
+			shared: true
+		},
+		legend: {
+			cursor: "pointer",
+			itemclick: toggleDataSeries
+		},
+		data: [{
+				type: "spline",
+				name: "Healt Probability Threeshould",
+				showInLegend: true,
+				xValueFormatString: "MMM YYYY",
+				yValueFormatString: "# Days",
+				dataPoints: [{
+						x: new Date(2019, 0, 1),
+						y: 39
+					},
+					{
+						x: new Date(2019, 1, 1),
+						y: 38
+					},
+					{
+						x: new Date(2019, 2, 1),
+						y: 37
+					},
+					{
+						x: new Date(2019, 3, 1),
+						y: 36
+					},
+					{
+						x: new Date(2019, 4, 1),
+						y: 65
+					},
+					{
+						x: new Date(2019, 5, 1),
+						y: 61
+					},
+					{
+						x: new Date(2019, 6, 1),
+						y: 75
+					},
+					{
+						x: new Date(2019, 7, 1),
+						y: 95
+					},
+					{
+						x: new Date(2019, 8, 1),
+						y: 55
+					},
+					{
+						x: new Date(2019, 9, 1),
+						y: 10
+					},
+					{
+						x: new Date(2019, 10, 1),
+						y: 25
+					},
+					{
+						x: new Date(2019, 11, 1),
+						y: 36
+					}
+				]
+			},
+			{
+				type: "spline",
+				name: "Healt Probability",
+				axisYType: "secondary",
+				showInLegend: true,
+				xValueFormatString: "MMM YYYY",
+				yValueFormatString: "# Days",
+				dataPoints: [{
+						x: new Date(2019, 0, 1),
+						y: 17
+					},
+					{
+						x: new Date(2019, 1, 1),
+						y: 23
+					},
+					{
+						x: new Date(2019, 2, 1),
+						y: 25
+					},
+					{
+						x: new Date(2019, 3, 1),
+						y: 22
+					},
+					{
+						x: new Date(2019, 4, 1),
+						y: 26
+					},
+					{
+						x: new Date(2019, 5, 1),
+						y: 29
+					},
+					{
+						x: new Date(2019, 6, 1),
+						y: 31
+					},
+					{
+						x: new Date(2019, 7, 1),
+						y: 20
+					},
+					{
+						x: new Date(2019, 8, 1),
+						y: 17
+					},
+					{
+						x: new Date(2019, 9, 1),
+						y: 19
+					},
+					{
+						x: new Date(2019, 10, 1),
+						y: 21
+					},
+					{
+						x: new Date(2019, 11, 1),
+						y: 23
+					}
+				]
+			}
+		]
+	};
+	$("#chartContainer").CanvasJSChart(options);
+
+	function toggleDataSeries(e) {
+		if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+			e.dataSeries.visible = false;
+		} else {
+			e.dataSeries.visible = true;
+		}
+		e.chart.render();
+	}
+}
+
 
 $(document).ready(function () {
 	ko.utils.arrayForEach(viewModel.locations(), function (location) {
@@ -617,17 +861,19 @@ $(document).ready(function () {
 			$('.shadow').removeClass('selected').trigger('mouseout');
 	});
 
-
-
 	viewModel.animalDetailsModal.modal({
-			keyboard: false,
-			// show: false
-		})
-		.on('shown.bs.modal',function(e){
-			viewModel.selectedAnimal(viewModel.locations()[0].animals()[0])
+			keyboard: true,
+			show: false
 		})
 		.on('hidden.bs.modal', function (e) {
 			viewModel.selectedAnimal(null);
 		})
+
+
+	$('#cow-details-tab').find('a').on('shown.bs.tab', function (e) {
+		if ($(e.currentTarget).prop('id') === 'pills-activityGraph-tab') {
+			loadChart();
+		}
+	});
 
 });
