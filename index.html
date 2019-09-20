@@ -263,7 +263,7 @@
             <div class="float-right  ml-auto mb-2">
                 <div class="mt-1 float-left" data-bind="visible:simulationStarted"> Simulation has started</div>
                 <button class="ml-2 btn btn-dark"
-                    data-bind="click:runActions.bind(this),class:simulationStarted() ? 'btn-danger' : 'btn-dark',text:simulationStarted() ? 'Stop Simulation':'Start Simulation'"
+                    data-bind="enable:!simulationStarted(),click:runActions.bind(this),class:simulationStarted() ? 'btn-success' : 'btn-dark',text:simulationStarted() ? 'Simulation Started':'Start Simulation'"
                     id="btnAnimate">Start Simulation</button>
                 <button type="button" class="btn btn-light"
                     data-bind="click:unSelecAllAnimals,enable:$root.selectedAnimals().length>0,class:$root.selectedAnimals().length===0 ? 'btn-light' : 'btn-warning'"><span

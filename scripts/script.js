@@ -40,25 +40,25 @@ var viewModel = {
 			"x": 1265,
 			"y": 250,
 			"delay": 2000
-		},{
+		}, {
 			"target": 1,
 			"element": null,
 			"x": 150,
 			"y": 250,
 			"delay": 5000
-		},{
+		}, {
 			"target": 1,
 			"element": null,
 			"x": 150,
 			"y": 290,
 			"delay": 5000
-		},{
+		}, {
 			"target": 1,
 			"element": null,
 			"x": 1265,
 			"y": 290,
 			"delay": 5000
-		},{
+		}, {
 			"target": 1,
 			"element": null,
 			"x": 1265,
@@ -358,25 +358,21 @@ var viewModel = {
 	},
 
 	calculateDuration: function (type, el, targetX, targetY, callback) {
-		var style = window.getComputedStyle(el.get(0));
-
-		var matrix = new WebKitCSSMatrix(style.webkitTransform);
-
-		var elTranslateX = matrix.m41,
-			elTranslateY = matrix.m42;
-
-		var animalSpeed = 0.5;
-
-		var speed = type === 'a' ? animalSpeed : animalSpeed * 15,
+		const style = window.getComputedStyle(el.get(0)),
+			matrix = new WebKitCSSMatrix(style.webkitTransform),
+			elTranslateX = matrix.m41,
+			elTranslateY = matrix.m42,
+			animalSpeed = 5,
+			deviceSpeed = animalSpeed * 5,
+			speed = type === 'a' ? animalSpeed : deviceSpeed,
 			animalLocation = {
 				x: el.x ? el.x : elTranslateX,
 				y: el.y ? el.y : elTranslateY
 			},
-			sourceLongAxis = Math.max(animalLocation.x, animalLocation.y),
-			targetLongAxis = Math.max(targetX, targetY),
-			distance = sourceLongAxis === targetLongAxis ? targetLongAxis : Math.abs(sourceLongAxis - targetLongAxis),
-			time = distance / (speed / 100);
-
+			distanceX = Math.pow(Math.abs(targetX - animalLocation.x), 2),
+			distanceY = Math.pow(Math.abs(targetY - animalLocation.y), 2),
+			road = Math.sqrt(distanceX + distanceY),
+			time = (road * 1000) / speed;
 		callback(time);
 	},
 
@@ -449,6 +445,8 @@ var viewModel = {
 		//vector animations
 		ko.utils.arrayForEach(viewModel.vectors(), function (vector, i) {
 			let vectorEl = $(`div#vector-${vector.id}`);
+
+			vectorEl.addClass('action')
 			if (typeof vector.actions === 'number') {
 				vector.actions = viewModel.generateRandomActions(l, vector.actions);
 			}
@@ -521,6 +519,11 @@ var viewModel = {
 				});
 			})
 		);
+
+		$.when($('.action')).then(function () {
+			viewModel.simulationStarted(false);
+		});
+
 		viewModel.simulationStarted(true);
 	}
 };
