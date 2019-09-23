@@ -546,16 +546,15 @@ function getAnimals(locationId, callback) {
 
 function getPositionAtCenter(element) {
 	var el = $(element).get(0);
-
 	var parent = $(element)
-		.parent()
+		.closest('.location')
 		.get(0);
 
 	var parentRect = parent.getBoundingClientRect();
 	var rect = el.getBoundingClientRect();
 	return {
-		x: rect.x - parentRect.x + rect.width / 2,
-		y: rect.y - parentRect.y + rect.height / 2
+		x: (rect.x - parentRect.x + rect.width / 2) - ($('.animal:first').width() / 2),
+		y: (rect.y - parentRect.y + rect.height / 2) - ($('.animal:first').height() / 2)
 	};
 }
 
