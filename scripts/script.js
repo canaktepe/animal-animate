@@ -369,9 +369,7 @@ var viewModel = {
 				x: el.x ? el.x : elTranslateX,
 				y: el.y ? el.y : elTranslateY
 			},
-			distanceX = Math.pow(Math.abs(targetX - animalLocation.x), 2),
-			distanceY = Math.pow(Math.abs(targetY - animalLocation.y), 2),
-			road = Math.sqrt(distanceX + distanceY),
+			road = calcRoad(animalLocation.x, targetX, animalLocation.y, targetY),
 			time = (road * 1000) / speed;
 		callback(time);
 	},
@@ -527,6 +525,12 @@ var viewModel = {
 		viewModel.simulationStarted(true);
 	}
 };
+
+
+function calcRoad(x1, x2, y1, y2) {
+	return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+}
+
 
 function getAnimals(locationId, callback) {
 	$.getJSON('../scripts/animals.json', {
