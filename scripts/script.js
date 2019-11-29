@@ -64,6 +64,66 @@ var viewModel = {
 			"x": 1265,
 			"y": 15,
 			"delay": 5000
+		}, {
+			"target": 1,
+			"element": null,
+			"x": 1265,
+			"y": 250,
+			"delay": 120000
+		}, {
+			"target": 1,
+			"element": null,
+			"x": 150,
+			"y": 250,
+			"delay": 5000
+		}, {
+			"target": 1,
+			"element": null,
+			"x": 150,
+			"y": 290,
+			"delay": 5000
+		}, {
+			"target": 1,
+			"element": null,
+			"x": 1265,
+			"y": 290,
+			"delay": 5000
+		}, {
+			"target": 1,
+			"element": null,
+			"x": 1265,
+			"y": 15,
+			"delay": 5000
+		}, {
+			"target": 1,
+			"element": null,
+			"x": 1265,
+			"y": 250,
+			"delay": 120000
+		}, {
+			"target": 1,
+			"element": null,
+			"x": 150,
+			"y": 250,
+			"delay": 5000
+		}, {
+			"target": 1,
+			"element": null,
+			"x": 150,
+			"y": 290,
+			"delay": 5000
+		}, {
+			"target": 1,
+			"element": null,
+			"x": 1265,
+			"y": 290,
+			"delay": 5000
+		}, {
+			"target": 1,
+			"element": null,
+			"x": 1265,
+			"y": 15,
+			"delay": 5000
 		}]
 	}]),
 
@@ -862,9 +922,18 @@ $(document).ready(function () {
 	});
 	ko.applyBindings(viewModel);
 
+	setTimeout(() => {
+		viewModel.runActions();
+	}, 2000);
+
 	viewModel.selectedAnimals.subscribe(function (arr) {
 		if (arr.length === 0)
 			$('.shadow').removeClass('selected').trigger('mouseout');
+	});
+
+	viewModel.simulationStarted.subscribe(function (status) {
+		if (!status)
+			$('#btnAnimate').click();
 	});
 
 	viewModel.animalDetailsModal.modal({

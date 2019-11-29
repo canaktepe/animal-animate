@@ -16,7 +16,7 @@
 
 body {
 	font-family: 'Saira Extra Condensed', sans-serif;
-	background-image: url('https://clipartstation.com/wp-content/uploads/2017/11/farm-field-clipart-10.jpg');
+	background-image: url('../images/bg.png');
 	font-size: 1.2em;
 	background-size: 100%;
 	-webkit-touch-callout: none;
@@ -30,6 +30,20 @@ body {
 	-ms-user-select: none;
 	/* Internet Explorer/Edge */
 	user-select: none;
+}
+
+.logo{
+    background-image: url(../images/logo.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;
+    width: 150px;
+    height: 100px;
+    overflow: hidden;
+    position: absolute;
+    bottom: 50px;
+    right: 50px;
+    text-indent: -999em;
 }
 
 .container {
