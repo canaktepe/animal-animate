@@ -155,7 +155,7 @@ var viewModel = {
 					id: '1',
 					name: 'cubicle1',
 					top: '5px',
-					left: '200px',
+					left: '160px',
 					cubicSize: 20,
 					door: 'down'
 				},
@@ -227,7 +227,7 @@ var viewModel = {
 					id: '10',
 					name: 'cubicle10',
 					top: '5px',
-					left: '690px',
+					left: '670px',
 					cubicSize: 21,
 					door: 'down'
 				}
@@ -236,7 +236,7 @@ var viewModel = {
 				id: 'astronaut1',
 				name: 'A1',
 				top: '5px',
-				left: '585px',
+				left: '565px',
 				width: '100px',
 				height: '40px'
 			}, {
@@ -262,7 +262,7 @@ var viewModel = {
 			top: '350px',
 			left: '150px',
 			width: '1100px',
-			height: '165px',
+			height: '172px',
 			feedFences: ko.observableArray([{
 					id: '1',
 					name: 'Droog2',
@@ -284,8 +284,8 @@ var viewModel = {
 					id: 1,
 					name: 'cubicle1',
 					top: '120px',
-					left: '87px',
-					cubicSize: 26,
+					left: '100px',
+					cubicSize: 24,
 					door: 'up'
 				},
 				{
@@ -301,7 +301,7 @@ var viewModel = {
 					name: 'cubicle1',
 					top: '120px',
 					left: '688px',
-					cubicSize: 21,
+					cubicSize: 20,
 					door: 'up'
 				},
 				{
