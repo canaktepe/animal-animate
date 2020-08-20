@@ -1,7 +1,7 @@
 # animal-animate
 animal animate for farmgraph
 
-# install packgaces
+# install packages
 
 ### `npm install`
 
